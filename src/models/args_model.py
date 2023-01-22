@@ -18,6 +18,7 @@ class ArgsModel:
     logo_spacing: any
     logo: any
     style: any
+    has_label: any
 
     @staticmethod
     def from_dict(obj: Any) -> 'ArgsModel':
@@ -29,13 +30,14 @@ class ArgsModel:
         logo_spacing = obj.get("logoSpacing")
         logo = obj.get("logo")
         style = obj.get("style")
-        return ArgsModel(label, message, label_color, background_color, logo_spacing, logo, style)
+        has_label = obj.get("hasLabel")
+        return ArgsModel(label, message, label_color, background_color, logo_spacing, logo, style, has_label)
 
     def to_dict(self) -> dict:
         result: dict = {"label": self.label, "message": self.message,
                         "labelColor": self.label_color, "backgroundColor": self.background_color,
                         "logoSpacing": self.logo_spacing, "logo": self.logo,
-                        "style": self.style}
+                        "style": self.style, "hasLabel": self.has_label}
         return result
 
 

@@ -1,5 +1,5 @@
 import requests
-from flask import make_response, Response
+from flask import make_response
 
 from src.controller.view_controller import ViewsCounter
 from src.helpers.get_svg_url import get_svg_url
@@ -22,7 +22,9 @@ def view_url(arguments: dict = None):
   "backgroundColor": "",
   "logoSpacing": null,
   "logo": "",
-  "style": ""}
+  "style": "",
+  "hasLabel": null
+  }
     """
     views_counter = ViewsCounter("views.json")
     try:
@@ -40,7 +42,8 @@ def view_url(arguments: dict = None):
         response.data = requests.get(get_svg_url(views_counter=views_counter, label_color=arguments.label_color,
                                                  color=arguments.background_color, logo_width=arguments.logo_spacing,
                                                  style=arguments.style, logo=arguments.logo,
-                                                 label=arguments.label)).text
+                                                 label=arguments.label if not None else "",
+                                                 has_label=arguments.has_label if arguments.has_label is not None else "true")).text
     except requests.exceptions.RequestException as e:
         # handle the error if the request to the SVG image URL fails
         return str(e), 500
