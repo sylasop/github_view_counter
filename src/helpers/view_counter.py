@@ -1,15 +1,28 @@
 import requests
-from flask import make_response
+from flask import make_response, Response
 
-from src.view_controller import ViewsCounter
+from src.controller.view_controller import ViewsCounter
+from src.helpers.get_svg_url import get_svg_url
+from src.models.args_model import args_model_from_dict
 
 
-def view_url():
+def view_url(arguments: dict = None) -> tuple[str, int] | Response:
     """
     View function for root route management. Increase the number of views, generate the URL for the SVG picture,
     and return the SVG image in the response.
 
     :return: the SVG image of the view counter
+    """
+    arguments = args_model_from_dict(arguments)
+    """
+    {
+  "label": "",
+  "message": "",
+  "labelColor":"",
+  "backgroundColor": "",
+  "logoSpacing": null,
+  "logo": "",
+  "style": ""}
     """
     views_counter = ViewsCounter("views.json")
     try:
@@ -24,7 +37,10 @@ def view_url():
     response.headers["Cache-Control"] = "no-cache, must-revalidate"
     response.headers["Content-type"] = "image/svg+xml"
     try:
-        response.data = requests.get(views_counter.get_svg_url()).text
+        response.data = requests.get(get_svg_url(views_counter=views_counter, label_color=arguments.label_color,
+                                                 color=arguments.background_color, logo_width=arguments.logo_spacing,
+                                                 style=arguments.style, logo=arguments.logo,
+                                                 label=arguments.label)).text
     except requests.exceptions.RequestException as e:
         # handle the error if the request to the SVG image URL fails
         return str(e), 500
