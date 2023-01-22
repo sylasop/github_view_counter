@@ -42,7 +42,7 @@ def view_url(arguments: dict = None):
         response.data = requests.get(get_svg_url(views_counter=views_counter, label_color=arguments.label_color,
                                                  color=arguments.background_color, logo_width=arguments.logo_spacing,
                                                  style=arguments.style, logo=arguments.logo,
-                                                 label=arguments.label if not None else "",
+                                                 label=arguments.label if not None else "", message=arguments.message,
                                                  has_label=arguments.has_label if arguments.has_label is not None else "true")).text
     except requests.exceptions.RequestException as e:
         # handle the error if the request to the SVG image URL fails

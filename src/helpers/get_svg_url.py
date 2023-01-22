@@ -7,7 +7,7 @@ from src.helpers.short_number_converter import short_number
 
 
 def get_svg_url(
-        views_counter: ViewsCounter,
+        views_counter: ViewsCounter, message,
         label, color, logo_width, style, label_color,
         logo, has_label) -> str:
     """
@@ -18,7 +18,7 @@ def get_svg_url(
     print(has_label_check(has_label, label))
     params = {
         "label": has_label_check(has_label, label),
-        "message": short_number(views_counter.data["hit"]),
+        "message": short_number(views_counter.data["hit"]) if message is None or message == "" else message,
         "labelColor": "BB33FF" if label_color is None else label_color,
         "color": "DF33FF" if color is None else color,
         "logoWidth": 28 if logo_width is None else logo_width,
