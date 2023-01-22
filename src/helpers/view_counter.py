@@ -44,4 +44,4 @@ def view_url(arguments: dict = None):
     except requests.exceptions.RequestException as e:
         # handle the error if the request to the SVG image URL fails
         return str(e), 500
-    return response.data
+    return response
