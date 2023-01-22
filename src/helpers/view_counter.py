@@ -6,7 +6,7 @@ from src.helpers.get_svg_url import get_svg_url
 from src.models.args_model import args_model_from_dict
 
 
-def view_url(arguments: dict = None) -> tuple[str, int] | Response:
+def view_url(arguments: dict = None):
     """
     View function for root route management. Increase the number of views, generate the URL for the SVG picture,
     and return the SVG image in the response.
@@ -44,4 +44,4 @@ def view_url(arguments: dict = None) -> tuple[str, int] | Response:
     except requests.exceptions.RequestException as e:
         # handle the error if the request to the SVG image URL fails
         return str(e), 500
-    return response
+    return response.data
