@@ -43,7 +43,7 @@ def view_url(arguments: dict = None):
     # headers["Expires"] = "Thu, 01 Dec 1994 16:00:00 GMT"
     # headers["Last-Modified"] = "Thu, 01 Dec 1994 16:00:00 GMT"
     response_.headers["Pragma"] = "no-cache"
-    response_.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response_.headers["Cache-Control"] = "no-cache"
     response_.headers["Content-type"] = "image/svg+xml"
     try:
         response = requests.get(get_svg_url(views_counter=views_counter, label_color=arguments.label_color,
