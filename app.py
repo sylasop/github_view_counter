@@ -47,5 +47,10 @@ def view_all_users():
     return jsonify(contents)
 
 
+@app.route("/test")
+def return_readme():
+    return open("README.md", "r").read()
+
+
 if __name__ == "__main__":
     app.run()
