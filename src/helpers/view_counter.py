@@ -1,6 +1,6 @@
 import requests
 from flask import make_response
-from datetime import datetime, timedelta
+
 from src.controller.view_controller import ViewsCounter
 from src.helpers.get_svg_url import get_svg_url
 from src.models.args_model import args_model_from_dict
@@ -33,11 +33,10 @@ def view_url(arguments: dict = None):
         # handle the error if the data file is not found
         return str(e), 500
     response = make_response("")
-    expires = datetime.utcnow() + timedelta(hours=1)
-    expires_str = expires.strftime("%a, %d %b %Y %H:%M:%S GMT")
-    response.headers["Expires"] = expires_str
-    response.headers["Last-Modified"] = expires_str
-    response.headers["Cache-Control"] = "max-age=3600, public"
+    response.headers["Expires"] = "Thu, 01 Dec 1994 16:00:00 GMT"
+    response.headers["Last-Modified"] = "Thu, 01 Dec 1994 16:00:00 GMT"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Cache-Control"] = "no-cache, must-revalidate"
     response.headers["Content-type"] = "image/svg+xml"
     try:
         response.data = requests.get(get_svg_url(views_counter=views_counter, label_color=arguments.label_color,
