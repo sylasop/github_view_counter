@@ -6,6 +6,10 @@ from src.helpers.normal_card import normal_card_gen
 from src.helpers.view_counter import view_url
 
 app = Flask(__name__)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+
+
+# app.config['CACHE_TYPE'] = 'null'
 
 
 @app.route("/")
@@ -45,7 +49,6 @@ def view_all_users():
         contents = json.loads(file.read())
         file.close()
     return jsonify(contents)
-
 
 
 if __name__ == "__main__":
