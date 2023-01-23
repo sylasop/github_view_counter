@@ -47,5 +47,6 @@ def view_all_users():
     return jsonify(contents)
 
 
+
 if __name__ == "__main__":
     app.run()
