@@ -24,9 +24,11 @@ def get_svg_url(
         "labelColor": _random_color if label_color is None else label_color,
         "color": _random_color if color is None else color,
         "logoWidth": 28 if logo_width is None else logo_width,
-        "logo": custom_icon if logo is None else logo,
+        "logo": '',
         "logoColor": "white" if logo_color is None else logo_color,
         "style": "for-the-badge" if style is None else style,
+        "cacheSeconds": 0,
+        "maxAge": 0,
         "cache_buster": cache_buster
     }
     return "https://img.shields.io/static/v1?" + urlencode(params)
