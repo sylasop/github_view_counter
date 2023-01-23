@@ -44,6 +44,7 @@ def view_url(arguments: dict = None):
     response.headers["Expires"] = "Thu, 01 Dec 1994 16:00:00 GMT"
     response.headers["Last-Modified"] = "Thu, 01 Dec 1994 16:00:00 GMT"
     response.headers["Pragma"] = "no-cache"
+    response.headers["max-age"] = "0"
     response.headers["Cache-Control"] = "no-cache, must-revalidate"
     response.headers["Content-type"] = "image/svg+xml"
     try:
