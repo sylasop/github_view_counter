@@ -1,6 +1,7 @@
+import datetime
+
 import requests
 from flask import make_response
-from requests.structures import CaseInsensitiveDict
 
 from src.controller.view_controller import ViewsCounter
 from src.utils.get_svg_url import get_svg_url
@@ -39,22 +40,21 @@ def view_url(arguments: dict = None):
     except FileNotFoundError as e:
         # handle the error if the data file is not found
         return str(e), 500
-    headers = CaseInsensitiveDict()
-    response_ = make_response()
-    # headers["Expires"] = "Thu, 01 Dec 1994 16:00:00 GMT"
-    # headers["Last-Modified"] = "Thu, 01 Dec 1994 16:00:00 GMT"
-    headers["Pragma"] = "no-cache"
-    headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    headers["Content-type"] = "image/svg+xml"
+    response = make_response("")
+    response.headers["Expires"] = "Thu, 01 Dec 1994 16:00:00 GMT"
+    response.headers["Last-Modified"] = "Thu, 01 Dec 1994 16:00:00 GMT"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Cache-Control"] = "no-cache, must-revalidate"
+    response.headers["Content-type"] = "image/svg+xml"
     try:
-        response = requests.get(get_svg_url(views_counter=views_counter, label_color=arguments.label_color,
-                                            color=arguments.background_color, logo_width=arguments.logo_spacing,
-                                            style=arguments.style, logo=arguments.logo,
-                                            label=arguments.label if not None else "", message=arguments.message,
-                                            has_label=arguments.has_label if arguments.has_label is not None else "true",
-                                            logo_color=arguments.logo_color), headers=headers)
-        response_.data = response.text
+        cache_buster = datetime.datetime.timestamp(datetime.datetime.now())
+        response.data = requests.get(get_svg_url(views_counter=views_counter, label_color=arguments.label_color,
+                                                 color=arguments.background_color, logo_width=arguments.logo_spacing,
+                                                 style=arguments.style, logo=arguments.logo,
+                                                 label=arguments.label if not None else "", message=arguments.message,
+                                                 has_label=arguments.has_label if arguments.has_label is not None else "true",
+                                                 logo_color=arguments.logo_color, cache_buster=cache_buster)).text
     except requests.exceptions.RequestException as e:
         # handle the error if the request to the SVG image URL fails
         return str(e), 500
-    return response_
+    return response

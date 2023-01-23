@@ -13,7 +13,7 @@ def index():
     return "Hello World!, UI is under development"
 
 
-@app.route("/views-counter")
+@app.route("/views-counts")
 def views():
     """
     View function for root route management. Increase the number of views, generate the URL for the SVG picture,
@@ -45,11 +45,6 @@ def view_all_users():
         contents = json.loads(file.read())
         file.close()
     return jsonify(contents)
-
-
-@app.route("/test")
-def return_readme():
-    return open("README.md", "r").read()
 
 
 if __name__ == "__main__":

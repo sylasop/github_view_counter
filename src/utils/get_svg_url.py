@@ -10,7 +10,7 @@ from src.utils.short_number_converter import short_number
 def get_svg_url(
         views_counter: ViewsCounter, message,
         label, color, logo_width, style, label_color,
-        logo, has_label, logo_color) -> str:
+        logo, has_label, logo_color, cache_buster) -> str:
     """
     Generate the URL for the SVG image of the view counter.
 
@@ -26,6 +26,7 @@ def get_svg_url(
         "logoWidth": 28 if logo_width is None else logo_width,
         "logo": custom_icon if logo is None else logo,
         "logoColor": "white" if logo_color is None else logo_color,
-        "style": "for-the-badge" if style is None else style
+        "style": "for-the-badge" if style is None else style,
+        "cache_buster": cache_buster
     }
     return "https://img.shields.io/static/v1?" + urlencode(params)
