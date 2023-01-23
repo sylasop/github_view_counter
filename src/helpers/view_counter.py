@@ -2,7 +2,8 @@ import requests
 from flask import make_response
 
 from src.controller.view_controller import ViewsCounter
-from src.helpers.get_svg_url import get_svg_url
+from src.utils.get_svg_url import get_svg_url
+from src.helpers.validators.validate_username import validate_username
 from src.models.args_model import args_model_from_dict
 
 
@@ -18,6 +19,7 @@ def view_url(arguments: dict = None):
     {
   "label": "",
   "message": "",
+  "username": "test",
   "labelColor":"",
   "backgroundColor": "",
   "logoSpacing": null,
@@ -26,9 +28,13 @@ def view_url(arguments: dict = None):
   "hasLabel": null
   }
     """
-    views_counter = ViewsCounter("views.json")
+    print(arguments)
+    views_counter = ViewsCounter("views.json", arguments.username)
     try:
-        views_counter.increment()
+        if validate_username(arguments.username):
+            views_counter.increment()
+        else:
+            return "Invalid username", 400
     except FileNotFoundError as e:
         # handle the error if the data file is not found
         return str(e), 500

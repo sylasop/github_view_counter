@@ -2,9 +2,9 @@ from urllib.parse import urlencode
 
 from src.constants.constants import custom_icon
 from src.controller.view_controller import ViewsCounter
-from src.helpers.has_label_checker import has_label_check
-from src.helpers.random_colors import random_color_gen
-from src.helpers.short_number_converter import short_number
+from src.helpers.validators.has_label_checker import has_label_check
+from src.utils.random_colors import random_color_gen
+from src.utils.short_number_converter import short_number
 
 
 def get_svg_url(
@@ -20,7 +20,7 @@ def get_svg_url(
     _random_color = random_color_gen()
     params = {
         "label": has_label_check(has_label, label),
-        "message": short_number(views_counter.data["hit"]) if message is None or message == "" else message,
+        "message": short_number(views_counter.get_views()) if message is None or message == "" else message,
         "labelColor": _random_color if label_color is None else label_color,
         "color": _random_color if color is None else color,
         "logoWidth": 28 if logo_width is None else logo_width,
